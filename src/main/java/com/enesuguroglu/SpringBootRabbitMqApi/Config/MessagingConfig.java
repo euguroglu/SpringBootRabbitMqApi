@@ -15,6 +15,9 @@ public class MessagingConfig {
     @Value("${rabbit.queue.name}")
     private String queueName;
 
+    @Value("${rabbit.queue.name2}")
+    private String queueName2;
+
     @Value("${rabbit.exchange.name}")
     private String exchangeName;
 
@@ -27,12 +30,22 @@ public class MessagingConfig {
     }
 
     @Bean
+    public Queue queue2(){
+        return new Queue(queueName2);
+    }
+
+    @Bean
     public TopicExchange directExchange(){
         return new TopicExchange(exchangeName);
     }
     @Bean
     public Binding binding(final Queue queue, TopicExchange exchange){
         return BindingBuilder.bind(queue).to(exchange).with(bindingName);
+    }
+
+    @Bean
+    public Binding binding2(final Queue queue2, TopicExchange exchange){
+        return BindingBuilder.bind(queue2).to(exchange).with(bindingName);
     }
 
     @Bean

@@ -25,7 +25,9 @@ public class RabbitMqController {
         order.setOrderId(UUID.randomUUID().toString());
 
         OrderStatus orderstatus = new OrderStatus(order, "PROCESS", "order placed succesfully in "+restaurantName);
-
+        //Message will be send to all defined queue since we bind all queues to given exchange with same routing key
+        //Message in queue2 will be consumed therefore we can not get those messages in rabbit mq ui
+        //Message in queue can be get using rabbit mq ui for testing purposes
         try {
             orderproducer.sendToQueue(orderstatus);
         } catch (AmqpException e) {
